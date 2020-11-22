@@ -1,0 +1,11 @@
+Package: Rcvxcluster
+Type: Package
+Title: Use Huber Loss and ADMM to do clustering
+Version: 1.1.2
+Date: 2020-11-21
+Author: Chenyu Liu, Qiang Sun, Kean Ming Tan
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+RoxygenNote: 7.1.1
+Encoding: UTF-8
