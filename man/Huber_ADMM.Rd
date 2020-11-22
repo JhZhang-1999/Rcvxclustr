@@ -1,7 +1,7 @@
 \name{Huber_ADMM}
 \alias{Huber_ADMM}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Alternating Direction Method of Multipleirs Algorithm for Solving Convex Clustering Objective}
+\title{Alternating Direction Method of Multipliers Algorithm for Solving Convex Clustering Objective}
 \description{
 ADMM algorithm for solving convex clustering objective, with Huber loss and fusion penalty. Weights in fusion penalty can be either specified or not (by default, all equal to 1). See more in reference. 
 }
