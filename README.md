@@ -34,6 +34,9 @@ Two main functions are implemented, and other functions in the package are depen
 
 ### Examples
 
+In the simulation, there are *n=20* observations that belong to two distinct non-overlapping clusters. The data matrix *X* is generated according to the model *X<sub>i</sub>=U<sub>1</sub>+&epsilon;<sub>i</sub>* when *i* belongs to the first cluster, and *X<sub>i</sub>=U<sub>2</sub>+&epsilon;<sub>i</sub>* when *i* belongs to the second cluster. Here *U<sub>1</sub>* and *U<sub>2</sub>* subject to different multivariate Gaussian distribution with identical covariance matrix and different means. 
+
+
 
 
 
