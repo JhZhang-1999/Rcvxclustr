@@ -10,7 +10,7 @@ This package implements the robust convex clustering problem proposed by [Liu, S
 
 In a convex clustering problem, the input is a data matrix *X* of dimention *n*&times;*p*, with *n* is the number of samples and *p* the number of features. Convex clustering algorithm estimates a centroid matrix *U* of the same size as *X*, with *X<sub>i</sub>* and *X<sub>j</sub>* if and only if *U<sub>i</sub>=U<sub>j</sub>*. 
 
-This proposed algorithm is a modified version of that proposed by [Chi and Lange (2015)](https://arxiv.org/abs/1304.0499), implemented in package `cvxcluster`. The two packages are compared in [this paper](https://arxiv.org/abs/1906.09581v2) and can be reproduced. 
+This proposed algorithm is a modified version of that proposed by [Chi and Lange (2015)](https://arxiv.org/abs/1304.0499), implemented in package `cvxclustr`. The two packages are compared in [this paper](https://arxiv.org/abs/1906.09581v2) and can be reproduced. 
 
 ### Installation
 
