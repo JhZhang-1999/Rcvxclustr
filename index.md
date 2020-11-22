@@ -1,4 +1,4 @@
-## Rcvxcluster
+## Rcvxclustr
 
 **Robust Convex Clustering Algorithm Implemented in R**
 
@@ -14,12 +14,12 @@ This proposed algorithm is a modified version of that proposed by [Chi and Lange
 
 ### Installation
 
-Install `Rcvxcluster` from GitHub: 
+Install `Rcvxclustr` from GitHub: 
 ```r
 install.packages("devtools")
 library(devtools)
-devtools::install_github("JhZhang-1999/Rcvxcluster")
-library(Rcvxcluster)
+devtools::install_github("JhZhang-1999/Rcvxclustr")
+library(Rcvxclustr)
 ```
 
 Helper functions can be accessed by typing `help(function name)` in R command. 
@@ -31,6 +31,8 @@ Two main functions are implemented, and other functions in the package are depen
 - `Huber_ADMM`: This function implements the alternating direction method of multipliers algorithm for solving the convex clustering objective function. It returns the matrix of centriod differences, i.e. matrix *V*, with *U<sub>i</sub>-U<sub>i'</sub>=V<sub>ii'</sub>* for all *i<i'*. 
 
 - `weight_delta`: This function implements the new weight function applied in fusion penalty, proposed in [the paper](https://arxiv.org/abs/1906.09581v2). It returns the *n &times;n* weight matrix for data *X* with *n* rows (number of samples). 
+
+### Examples
 
 
 
