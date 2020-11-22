@@ -1,6 +1,6 @@
-\name{Rcvxcluster-package}
-\alias{Rcvxcluster-package}
-\alias{Rcvxcluster}
+\name{Rcvxclustr-package}
+\alias{Rcvxclustr-package}
+\alias{Rcvxclustr}
 \docType{package}
 \title{
 Robust Convex Clustering
