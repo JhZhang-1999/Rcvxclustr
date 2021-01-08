@@ -1,11 +1,18 @@
 Package: Rcvxclustr
-Type: Package
-Title: Use Huber Loss and ADMM to do clustering
-Version: 1.1.2
-Date: 2020-11-21
+Maintainer: Chenyu Liu <liux3872@umn.edu>
 Author: Chenyu Liu, Qiang Sun, Kean Ming Tan
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
-RoxygenNote: 7.1.1
+Version: 1.1.1
+License: CC BY-NC-SA 4.0
+Title: Robust convex clustering: How does the fusion penalty enhance
+        robustness?
+Description: Alternating Direction Method of Multipliers (ADMM) using Huber loss
+     for convex clustering.
+Depends: R (>= 2.15.2), Matrix, igraph, gdata, Rcpp
+LazyData: true
+Packaged: 2021-01-08 22:53; jiahuizhang
+NeedsCompilation: yes
+Repository: CRAN
+LinkingTo: Rcpp, RcppArmadillo
+Date/Publication: 2014-07-28 08:28:25
 Encoding: UTF-8
+RoxygenNote: 7.1.1
