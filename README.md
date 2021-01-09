@@ -93,6 +93,16 @@ cl_true <- c(rep(1,25),rep(2,25))
 adjustedRand(cl_true,cl)
 ```
 
+In this case, the algorithm gets all the results correctly, that is, `cl` equals `cl_true`, and the `adjustedRand` all equal to 1. 
+```r
+> cl
+ [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2
+[28] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+> adjustedRand(cl_true,cl)
+   Rand      HA      MA      FM Jaccard 
+      1       1       1       1       1 
+```
+
 
 
 
