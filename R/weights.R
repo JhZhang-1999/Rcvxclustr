@@ -5,8 +5,9 @@
 #' Namely, the lth weight \code{w[l]} is given by 
 #' \deqn{
 #' w[l] = exp(-\zeta{\sum_{j\in D_{1}}(X_{i'j}-X_{ij})^2+\sum_{j\in D_{2}}{\delta}^2})
-#' } , where the lth pair of nodes is (\code{i},\code{i'})
+#' , where the lth pair of nodes is (\code{i},\code{i'})
 #' and \code{D1={j:|X_{ij}-X_{i'j}|<delta}}, \code{D2={j:|X_{ij}-X_{i'j}|>delta}}.
+#' }
 #' @param X The data matrix to be clustered. The rows are observations, and the columns 
 #' are features.
 #' @param delta The nonnegative parameter that controls the scale of robust weights 
