@@ -49,15 +49,16 @@ create_adjacency_matrix <-function(V,wt,n){
   A[(j-1)*n + i] <-1
   return(A)
 }
+
 #' Find clusters
 #' 
-#' \code{find_clusters} uses breadth-first search to identify the connected components
+#' \code{find_clusters_from_adjacency} uses breadth-first search to identify the connected components
 #'  of the corresponding adjacency graph of the centroid differences vectors.
 #'  
 #'  @param A adjacency matrix
 #'  @import igraph
 #'  @export
-find_clusters <- function(A){
+find_clusters_from_adjacency <- function(A){
   G <- graph.adjacency(A, mode = 'upper')
   n <- nrow(A)
   node_seen <- logical(n)
