@@ -53,11 +53,11 @@ create_adjacency_matrix <-function(V,wt,n){
 #' Find clusters
 #' 
 #' \code{find_clusters_from_adjacency} uses breadth-first search to identify the connected components
-#'  of the corresponding adjacency graph of the centroid differences vectors.
-#'  
-#'  @param A adjacency matrix
-#'  @import igraph
-#'  @export
+#' of the corresponding adjacency graph of the centroid differences vectors.
+#' 
+#' @param A adjacency matrix
+#' @import igraph
+#' @export
 find_clusters_from_adjacency <- function(A){
   G <- graph.adjacency(A, mode = 'upper')
   n <- nrow(A)

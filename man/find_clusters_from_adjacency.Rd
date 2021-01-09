@@ -6,11 +6,10 @@
 \usage{
 find_clusters_from_adjacency(A)
 }
+\arguments{
+\item{A}{adjacency matrix}
+}
 \description{
 \code{find_clusters_from_adjacency} uses breadth-first search to identify the connected components
- of the corresponding adjacency graph of the centroid differences vectors.
- 
- @param A adjacency matrix
- @import igraph
- @export
+of the corresponding adjacency graph of the centroid differences vectors.
 }

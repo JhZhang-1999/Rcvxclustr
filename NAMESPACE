@@ -2,9 +2,11 @@
 
 export(create_E_matrix)
 export(create_adjacency_matrix)
+export(find_clusters_from_adjacency)
 export(robust_weights)
 export(robustcvxclust)
 export(robustcvxclust_path)
 import(Matrix)
 import(gdata)
+import(igraph)
 useDynLib(Rcvxclustr)
