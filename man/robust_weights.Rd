@@ -24,8 +24,9 @@ a scale parameter \code{zeta} and a parameter that controls the weights \code{de
 Namely, the lth weight \code{w[l]} is given by 
 \deqn{
 w[l] = exp(-\zeta{\sum_{j\in D_{1}}(X_{i'j}-X_{ij})^2+\sum_{j\in D_{2}}{\delta}^2})
-} , where the lth pair of nodes is (\code{i},\code{i'})
+, where the lth pair of nodes is (\code{i},\code{i'})
 and \code{D1={j:|X_{ij}-X_{i'j}|<delta}}, \code{D2={j:|X_{ij}-X_{i'j}|>delta}}.
+}
 }
 \author{
 Chenyu Liu, Qiang Sun, Kean Ming Tan
