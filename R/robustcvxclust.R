@@ -29,7 +29,7 @@
 #' @return \code{tol} The residual tolerances.
 #' @export
 #' @author  Chenyu Liu, Qiang Sun, Kean Ming Tan
-#' @useDynLib robustcvxclustr
+#' @useDynLib Rcvxclustr
 #' @examples
 #' ## Create random problems
 #' p <- 10

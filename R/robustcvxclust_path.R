@@ -18,7 +18,7 @@
 #' @return \code{Z} A list of Lagrange multiplier matrices.
 #' @export
 #' @author Chenyu Liu, Qiang Sun, Kean Ming Tan
-#' @useDynLib robustcvxclustr
+#' @useDynLib Rcvxclustr
 #' @examples 
 #' ## Create random problems
 #' p <- 10

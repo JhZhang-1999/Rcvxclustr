@@ -13,7 +13,7 @@
 #' when there is outlier(s) in the data.
 #' @param zeta The nonnegative parameter that controls the scale of robust weights.
 #' @author Chenyu Liu, Qiang Sun, Kean Ming Tan
-#' @useDynLib robustcvxclustr
+#' @useDynLib Rcvxclustr
 #' @import gdata
 #' @export
 #' @return A vector \cite{wt} of weights for robust convex clustering.
