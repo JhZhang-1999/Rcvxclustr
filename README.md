@@ -67,7 +67,7 @@ X[sample(1:(n*p),10)] <- outliers
 
 Then create the weight vector: 
 ```r
-wt.vec <- robust_weights(X,15,0.1)
+wt.vec <- uni_weights(N,p)
 ```
 
 Solve the convex clustering objective function: 
@@ -106,141 +106,7 @@ In this case, the algorithm gets all the results correctly, that is, `cl` equals
 
 ### The CARP Algorithm
 
-Adopting the CARP alrogithm of [Waylandt et al (2020)](https://www.tandfonline.com/doi/full/10.1080/10618600.2019.1629943), we run the clustering method while incrementing the lambda paramter. Each lambda is only used for one iteration. This algorithm can speed up the process greatly. We use the function `CARP.RCC` defined as below to conduct the numerical experiments in our paper. 
-
-Here, method 1 uses the uniform weights, and method 2 uses the GKernel weights. 
-
-```r
-distance_matrix <- function(X){
-  n <- nrow(X)
-  distance <- matrix(0,nrow=n,ncol=n)
-  for(i in seq(from=1,to=n-1,by=1)){
-    for(j in seq(from=i+1,to=n, by=1)){
-      distance[i,j]<-norm(X[i,]-X[j,],type = "2")
-      distance[j,i]<-norm(X[i,]-X[j,],type = "2")
-    }
-  }
-  return(distance)
-}
-Gauss_weights <- function(phi,distance){
-  wt <- exp(-phi*distance^2)
-  w<-lowerTriangle(wt)/max(lowerTriangle(wt))
-  return(w)
-}
-uni_weights <- function(n,p){
-  wt <- rep(1,n*(n-1)/2)
-  return (wt)
-}
-CARP.RCC <- function(X,zeta,phi,method,lam.begin,lam.step,rho,tau,delta,init.V,init.Y,cl_true,seed,randmode,max.log=100){
-  lams <- vector(length=max.log)
-  n <- dim(X)[1]
-  p <- dim(X)[2]
-  d <- distance_matrix(X)
-  wt.CC <- Gauss_weights(phi = phi,distance=d)
-  wt.uni <- uni_weights(n,p)
-  times <- vector(length=max.log)
-  cl.matrix <- matrix(0,ncol=n,nrow=length(lams))
-  if (method=='Eric1' | method=='Eric2'){
-    t1 <- proc.time()
-    temp <- create_clustering_problem(p,n,method = "admm",seed=1234)
-    t2 <- proc.time()
-    dtime1 <- (t2-t1)[[1]]
-    ix<-temp$ix;M1<-temp$M1;M2<-temp$M2;s1<-temp$s1;s2<-temp$s2
-    k<-length(wt.uni)
-    Lambda<-matrix(0,p,k)
-    if (method=='Eric1'){
-      present.weight <- wt.uni
-    }
-    else if (method=='Eric2'){
-      present.weight <- wt.CC
-    }
-    t1 <- proc.time()
-    Eric.init <- cvxclust_admm(X=t(X),Lambda=Lambda,ix,M1,M2,s1,s2,w=present.weight,gamma=lam.begin,nu=1,accelerate = FALSE,max_iter=1)
-    t2 <- proc.time()
-    dtime2 <- (t2-t1)[[1]]
-    times[1] <- dtime1+dtime2
-    rands <- vector(length=max.log)
-    B <- create_adjacency(Eric.init$V,present.weight,n,method = "admm")
-    present.cl <- find_clusters(B)$cluster
-    cl.matrix[1,] <- present.cl
-    rands[1] <- adjustedRand(cl_true,present.cl,randmode)
-    ind <- 2
-    present.lam <- lam.begin
-    lams[1] <- present.lam
-    while(1){
-      present.lam <- present.lam * lam.step
-      lams[ind] <- present.lam
-      t1 <- proc.time()
-      Eric.res <- cvxclust_admm(X=t(X),Lambda=Eric.init$Lambda,ix,M1,M2,s1,s2,w=present.weight,gamma=present.lam,nu=1,accelerate = FALSE,max_iter = 1)
-      t2 <- proc.time()
-      dtime <- (t2-t1)[[1]]
-      times[ind] <- dtime
-      B <- create_adjacency(Eric.res$V,present.weight,n,method="admm")
-      present.cl <- find_clusters(B)$cluster
-      cl.matrix[ind,] <- present.cl
-      rands[ind] <- adjustedRand(cl_true,present.cl,randmode)
-      Eric.init <- Eric.res
-      if (length(unique(present.cl))==1 | ind == max.log){
-        break
-      }
-      ind <- ind + 1
-    }
-    cls_num <- apply(cl.matrix,1,function(x) length(unique(x)))
-  }
-  else if (method=='huber1' | method=='huber2'){
-    present.lam <- lam.begin
-    if (method=='huber1'){
-      present.weight <- wt.uni
-    }
-    else if (method=='huber2'){
-      present.weight <- wt.CC
-    }
-    t1 <- proc.time()
-    res.init <- robustcvxclust(X,lam=present.lam,tau=tau,wt=present.weight,rho=rho,max_iter=1)
-    t2 <- proc.time()
-    dtime <- (t2-t1)[[1]]
-    times[1] <- dtime
-    A <- create_adjacency(t(res.init$V),present.weight,n,method = "admm")
-    present.cl <- find_clusters(A)$cluster
-    cl.matrix[1,] <- present.cl
-    rands <- vector(length=max.log)
-    rands[1] <- adjustedRand(cl_true,present.cl,randmode)
-    lams[1] <- present.lam
-    ind <- 2
-    while(1){
-      present.lam <- present.lam * lam.step
-      lams[ind] <- present.lam
-      t1 <- proc.time()
-      res <- robustcvxclust(X, V=res.init$V, Y=res.init$Y,W=res.init$W, Z=res.init$Z, lambda=present.lam,tau=tau, wt=present.weight, rho=rho,max_iter=1) 
-      t2 <- proc.time()
-      dtime <- (t2-t1)[[1]]
-      times[ind] <- dtime
-      A <- create_adjacency(t(res$V),present.weight,n,method = "admm")
-      present.cl <- find_clusters(A)$cluster
-      cl.matrix[ind,] <- present.cl
-      rands[ind] <- adjustedRand(cl_true,present.cl,randmode)
-      res.init <- res
-      if (length(unique(present.cl))==1 | ind == max.log){
-        break
-      }
-      ind <- ind+1
-    }
-    cls_num <- apply(cl.matrix,1,function(x) length(unique(x)))
-  }
-
-  fake_num <- ifelse(cls_num < 2, n, cls_num)
-  true_ind <- which(fake_num==min(fake_num))
-  best_rand <- max(rands) # directly look for best rand
-  best_ind <- which(rands==best_rand)
-  best_lam <- lams[best_ind]
-  max_best_ind <- which(lams==max(best_lam))
-  print(cl.matrix[max_best_ind,]) # best rand index obtained
-
-  return(list(method=method,rand=best_rand,lam=best_lam,time=times[max_best_ind]))
-}
-```
-
-One can also return the `cl_matrix` to obtain the path of the algorithm, which keeps record of the clustering result of each iteration. 
+Adopting the CARP alrogithm of [Waylandt et al (2020)](https://www.tandfonline.com/doi/full/10.1080/10618600.2019.1629943), we run the clustering method while incrementing the lambda paramter. Each lambda is only used for one iteration. This algorithm can speed up the process greatly. We use the function `CARP_RCC` in the package to conduct the numerical experiments in our paper. 
 
 ### Artificial Demonstration Data
 
@@ -274,16 +140,18 @@ cl_true <- gen$cl_true
 Using the Eric method, we obtain:
 
 ```r
-result <- CARP.path(X,delta=15,zeta=0.1,phi=.1,method='Eric1',
+result <- CARP_RCC(X,delta=15,zeta=0.1,phi=.1,method='cvx_uni',
                         lam.begin =0.01,lam.step=1.05,rho=1,tau=3,cl_true=cl_true,randmode='HA',max.log=200)
+result$cl_est
 [1] 1 1 1 2 1 1 1 1 1 1 3 1 4 4 4 4 4 4 5 4 4 4 4 4
 ```
 
 Using the proposed method, we obtain: 
 
 ```r
-result <- CARP.path(X,delta=15,zeta=0.1,phi=.1,method='huber1',
+result <- CARP_RCC(X,delta=15,zeta=0.1,phi=.1,method='Rcvx_uni',
                         lam.begin =0.01,lam.step=1.05,rho=1,tau=3,cl_true=cl_true,randmode='HA',max.log=200)
+result$cl_est
 [1] 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2
 ```
 

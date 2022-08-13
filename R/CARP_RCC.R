@@ -25,6 +25,7 @@
 #' @return \code{rand} The best rand index obtained. 
 #' @return \code{lam} The best \code{lambda} value, which reaches the best rand index. 
 #' @return \code{path} A matrix, of which each row represents the clustering result for each iteration. 
+#' @return \code{cl_est} The result of cluster estimation which produces the best rand index.  
 #' @import cvxclustr
 #' @import clues
 #' @export
@@ -117,7 +118,7 @@ CARP.RCC <- function(X,phi,method,lam.begin,lam.step,rho,tau,cl_true,randmode,ma
   best_ind <- which(rands==best_rand)
   best_lam <- lams[best_ind]
   max_best_ind <- which(lams==max(best_lam))
-  return(list(method=method,rand=best_rand,lam=best_lam,path=cl.matrix))
+  return(list(method=method,rand=best_rand,lam=best_lam,path=cl.matrix,cl_est=cl.matrix[max_best_ind,]))
 }
 
 

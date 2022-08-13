@@ -48,6 +48,8 @@ The algorithm also stops when the present iteration gives out the result where a
 \code{lam} The best \code{lambda} value, which reaches the best rand index.
 
 \code{path} A matrix, of which each row represents the clustering result for each iteration.
+
+\code{cl_est} The result of cluster estimation which produces the best rand index.
 }
 \description{
 \code{CARP_RCC} performs convex clustering with the CARP algorithm. 
