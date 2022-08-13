@@ -1,4 +1,4 @@
-#' Compute Robust weights
+#' Compute weights
 #'
 #' \code{robust_weights} computes the robust weights given a data matrix \code{X}, 
 #' a scale parameter \code{zeta} and a parameter that controls the weights \code{delta}.
@@ -18,8 +18,32 @@
 #' @import gdata
 #' @export
 #' @return A vector \cite{wt} of weights for robust convex clustering.
-  robust_weights <- function(X, delta, zeta){
-      sol <- robustweights(X=X,delta=delta,zeta=zeta)
-      weights <- lowerTriangle(sol)
-      return(weights/max(weights))
+robust_weights <- function(X, delta, zeta){
+    sol <- robustweights(X=X,delta=delta,zeta=zeta)
+    weights <- lowerTriangle(sol)
+    return(weights/max(weights))
+}
+
+#' \code{GKernel_weights} computes the Gaussian kernel weights, 
+#' using the distance matrix as the input. 
+#' 
+#' @param phi The parameter in the Gaussian kernel
+#' @param distance The distance matrix, with dimension n*n, 
+#' where n is the row count of the data matrix. The distance matrix can be generated 
+#' by function \code{distance_matrix} from the data matrix. 
+#' @export
+GKernel_weights <- function(phi,distance){
+  wt <- exp(-phi*distance^2)
+  w<-lowerTriangle(wt)/max(lowerTriangle(wt))
+  return(w)
+}
+
+#' \code{uni_weights} computes the uniform weights. 
+#' 
+#' @param n The row count, or amount of data points, of the data matrix. 
+#' @param p The column count, or amount of features, of the data matrix. 
+#' @export
+uni_weights <- function(n,p){
+  wt <- rep(1,n*(n-1)/2)
+  return (wt)
 }

@@ -65,32 +65,6 @@ Dimensions of various arguments are as follows:
 \item{nK is the number non-zero weights.}
 }
 }
-\examples{
-## Create random problems
-p <- 10
-n <- 20
-seed <- 1234
-mu1 <- rnorm(p,0,1)
-X1 <- mvrnorm((n/2),mu=mu1,Sigma=diag(1,p))
-mu2 <- c(rnorm(p/2,3,1),rnorm(p/2,-3,1))
-X2 <- mvrnorm((n/2),mu=mu2,Sigma=diag(1,p))
-X <- rbind(X1,X2)
-out.percent <- 0.06
-n.out <- as.integer(n*out.percent)
-nth <- sort(sample.int(n.out,1:n))
-for(i in nth){
- outliers <- sample(runif(n=p*0.2,min = 10,max = 20))
- X[i,sample(p)[1:(p*0.2)]] <- outliers
-}
-wt <- rep(1,n*(n+1)/2)
-rho <- 1
-tau <- 3
-lambda <- seq(0,5,1)
-results <- list()
-for (i in lambda){
-  results[[i]]<- robustcvxclust(X,W,V,Y,Z,max_iter,rho,tau,i,wt,tol_abs)
-}
-}
 \author{
 Chenyu Liu, Qiang Sun, Kean Ming Tan
 }

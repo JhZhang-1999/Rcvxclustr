@@ -79,3 +79,27 @@ find_clusters_from_adjacency <- function(A){
   }
   return(list(cluster=cluster, size=size))
 }
+
+#' Generate Distance Matrix from Data
+#' 
+#' \code{distance_matrix} generates the distance matrix from the data matrix. 
+#' 
+#' @param X data matrix
+#' @export
+distance_matrix <- function(X){
+  n <- nrow(X)
+  distance <- matrix(0,nrow=n,ncol=n)
+  for(i in seq(from=1,to=n-1,by=1)){
+    for(j in seq(from=i+1,to=n, by=1)){
+      distance[i,j]<-norm(X[i,]-X[j,],type = "2")
+      distance[j,i]<-norm(X[i,]-X[j,],type = "2")
+    }
+  }
+  return(distance)
+}
+
+
+
+
+
+

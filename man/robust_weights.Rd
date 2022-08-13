@@ -2,7 +2,7 @@
 % Please edit documentation in R/weights.R
 \name{robust_weights}
 \alias{robust_weights}
-\title{Compute Robust weights}
+\title{Compute weights}
 \usage{
 robust_weights(X, delta, zeta)
 }
